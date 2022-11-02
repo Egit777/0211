@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructor
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
 import 'package:tela_de_calculo/Home.dart';
+import 'Database/BancoDados.dart';
 import 'telaCalculo.dart';
 import 'main.dart';
 
@@ -8,6 +11,7 @@ const Color darkBlue = Color.fromARGB(255, 255, 255, 255);
 
 class MyTable extends StatefulWidget {
   final List<DataRow>? dadosTabela;
+
   @override
   const MyTable({
     required this.dadosTabela,

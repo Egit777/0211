@@ -2,10 +2,12 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:tela_de_calculo/Home.dart';
 import 'package:tela_de_calculo/historico.dart';
+import 'Database/BancoDados.dart';
 import 'main.dart';
 import 'package:flutter/material.dart';
 import 'buttonDropCalculo.dart';
 import 'graficoo.dart';
+import 'models/ClienteModel.dart';
 
 class TelaCalculo extends StatefulWidget {
   const TelaCalculo({Key? key}) : super(key: key);
@@ -69,6 +71,19 @@ class _TelaCalculoState extends State<TelaCalculo> {
         ],
       ),
     );
+  }
+
+  salvarCliente() async {
+    ClienteModel cliente = new ClienteModel();
+    cliente.data = _controllerDias.text;
+    cliente.litro = _controllerLitros.text;
+    cliente.endereco = _controllerEndereco.text;
+    cliente.km = _controllerKM.text;
+    cliente.valortotal = _controllerValor.text;
+    cliente.valorlitro = resultadoTwo!;
+    cliente.consumokm = resultado!;
+
+    var retorno = await BancoDados.inserirnoBanco(cliente);
   }
 
   String resultadoCalculo = "";
@@ -160,6 +175,7 @@ class _TelaCalculoState extends State<TelaCalculo> {
                   padding: EdgeInsets.all(3),
                   child: TextField(
                     controller: _controllerLitros,
+                    keyboardType: const TextInputType.numberWithOptions(),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(Icons.ev_station),
@@ -203,6 +219,7 @@ class _TelaCalculoState extends State<TelaCalculo> {
                   padding: EdgeInsets.all(3),
                   child: TextField(
                     controller: _controllerValor,
+                    keyboardType: const TextInputType.numberWithOptions(),
                     decoration: InputDecoration(
                         border: InputBorder.none,
                         icon: Icon(Icons.money),
@@ -290,6 +307,14 @@ class _TelaCalculoState extends State<TelaCalculo> {
                   icon: Icon(Icons.history_sharp),
                   label: Text('Histórico'),
                 ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.blue[900],
+                    ),
+                    onPressed: () async {
+                      await salvarCliente();
+                    },
+                    child: Text('Salvar')),
               ]),
             ]),
           ),

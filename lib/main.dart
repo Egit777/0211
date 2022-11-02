@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'Database/BancoDados.dart';
 import 'package:tela_de_calculo/Home.dart';
 import 'telaCalculo.dart';
 import 'sobrenos.dart';
@@ -14,6 +15,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    BancoDados.criarBanco();
+
     return MaterialApp(
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: darkBlue,
