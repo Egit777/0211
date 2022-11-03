@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-
 import '../models/ClienteModel.dart';
 
 class BancoDados {
@@ -25,10 +24,12 @@ class BancoDados {
   }
 
   static inserirnoBanco(ClienteModel cliente) async {
-    Database db = await criarBanco();
+    Database db = await BancoDados.criarBanco();
     String sqlcomando =
         "INSERT INTO clientes (data, litro, endereco, km, valortotal, valorlitro, consumokm) "
         " VALUES (' ${cliente.data} ', ' ${cliente.litro} ', ' ${cliente.endereco} ', ' ${cliente.km}', ' ${cliente.valortotal} ', ' ${cliente.valorlitro} ', ' ${cliente.consumokm}' );"; //comando sql para adicionar clientes em tal coluna e tal valores!
-    db.execute(sqlcomando);
+    var a = await db.execute(sqlcomando);
+    List<Map> list = await db.rawQuery('SELECT * FROM clientes');
+    print(list);
   }
 }
